@@ -12,6 +12,7 @@ interface ButtonProps {
   variant?: "primary" | "secondary" | "danger" | "outline" | "success";
   isRounded?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  isFullWidth?: boolean;
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -38,12 +39,13 @@ export default function Button({
   variant = "primary",
   isRounded = false,
   onClick,
+  isFullWidth = false,
 }: ButtonProps) {
   return (
     <button
       onClick={onClick}
       disabled={isLoading}
-      className={`flex items-center justify-center gap-2 font-semibold transition-all duration-200 ${
+      className={`flex cursor-pointer items-center ${isFullWidth ? "w-full" : ""} justify-center gap-2 font-semibold transition-all duration-200 ${
         sizeClasses[size]
       } ${variantClasses[variant]} ${isRounded ? "rounded-full" : "rounded-xl"} disabled:opacity-60 disabled:cursor-not-allowed`}
     >
