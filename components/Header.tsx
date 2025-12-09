@@ -30,6 +30,7 @@ const Header = () => {
         const numFunders = await getNumberOfFunders();
         setNoOfFunders(numFunders);
       }catch(error){
+        
         console.error("Error fetching number of funders:", error)
       }
     }

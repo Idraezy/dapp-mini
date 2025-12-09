@@ -30,8 +30,8 @@ export const getNumberOfFunders = async() =>{
     return Number(res);
 }
 
-export const fundContract = async (ethAmount: number, walletAddress: Address)=>{
-    const walletCliient = await getWalletClient();
+export const fundContract = async (ethAmount: string, walletAddress: Address)=>{
+    const walletCliient = getWalletClient();
 
     const txMash = await walletCliient.writeContract({
         address: CONTRACT_ADDRESS,
@@ -45,4 +45,27 @@ export const fundContract = async (ethAmount: number, walletAddress: Address)=>{
 
     return txMash;
 
+}
+
+export const getContractBalance = async() => {
+    const balance = await publicClient.getBalance({
+        address: CONTRACT_ADDRESS,
+    })
+    return formatEther(balance);
+}
+
+export const getWalletBalance = async(walletAddress: Address) => {
+    const balance = await publicClient.getBalance({
+        address: walletAddress,
+    })
+    return formatEther(balance);
+}
+
+export const getMinDepositUSD = async() => {
+    const res = await publicClient.readContract({
+        address: CONTRACT_ADDRESS,
+        abi: contractABI,
+        functionName: 'mimimumDollarAmount',
+    })
+    return formatEther(res as bigint);
 }
